@@ -5,18 +5,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const width = 8;
     const squares = [];
     let score = 0;
-    var matchColor = 0;
-    var squareId = 0;
-    var matchColorLeft = 0;
-    var matchColorRight = 0;
-    var matchColorLeft1 = 0;
-    var matchColorRight1 = 0;
-
-    var matchColorUp = 0;
-    var matchColorDown = 0;
-    var matchColorUp1 = 0;
-    var matchColorDown1 = 0;
-
 
     const candyColors = [
         'url(images/red-candy.png)',
@@ -33,15 +21,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
         for(i = 0; i < width*width; i++){
 
             const square = document.createElement('div');
-            square.setAttribute('draggable' , true);
-            square.setAttribute('id', i);
+            square.setAttribute('draggable' , true); //Making each div draggable
+            square.setAttribute('id', i); //assigning each div an id from 0 to 63 
 
-            let randomColor = Math.floor(Math.random() * candyColors.length);
+            let randomColor = Math.floor(Math.random() * candyColors.length); //randomColor stores an integer value between 0 to 5.
             square.style.backgroundImage = candyColors[randomColor];
             
-            grid.appendChild(square);
-            squares.push(square);
-
+            grid.appendChild(square); //creates a new div
+            squares.push(square); // stores the "object HTMLDivElement" in the array
+           // console.log(i + "\nsquares[" + i + "]: "+ squares[i]);
         }
 
     }
@@ -55,19 +43,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
     let squareIdBeingDragged;
     let squareIdBeingReplaced;
 
-    squares.forEach(square => square.addEventListener('dragstart', dragStart));
+    squares.forEach(square => square.addEventListener('dragstart', dragStart));  //square is a paramter being used in the arrow function
     squares.forEach(square => square.addEventListener('dragend', dragEnd));
     squares.forEach(square => square.addEventListener('dragover', dragOver));
     squares.forEach(square => square.addEventListener('dragenter', dragEnter));
     squares.forEach(square => square.addEventListener('dragleave', dragLeave));
-    squares.forEach(square => square.addEventListener('drop', dragDrop));
+
+    squares.forEach(function(square){square.addEventListener('drop', dragDrop)});
 
     function dragStart(){
-
-        matchColor = this.style.backgroundImage;
-
         colorBeingDragged = this.style.backgroundImage;
         squareIdBeingDragged = parseInt(this.id);
+        console.log("Colour Being Dragged: " + colorBeingDragged + "\n Square Id being Dragged: " + squareIdBeingDragged);
         console.log(this.id, 'dragstart')
     }
 
@@ -88,52 +75,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
     function dragDrop(){
-
-        squareId = parseInt(this.id);
-
-        
-    // Initialize all variables with the default value
-    matchColorLeft = 'Default Value';
-    matchColorRight = 'Default Value';
-    matchColorLeft1 = 'Default Value';
-    matchColorRight1 = 'Default Value';
-    matchColorUp = 'Default Value';
-    matchColorDown = 'Default Value';
-    matchColorUp1 = 'Default Value';
-    matchColorDown1 = 'Default Value';
-
-    // Check for valid combinations and update the variables
-    if (squares[squareId - 1]) {
-        matchColorLeft = squares[squareId - 1].style.backgroundImage;
-    }
-    if (squares[squareId + 1]) {
-        matchColorRight = squares[squareId + 1].style.backgroundImage;
-    }
-    if (squares[squareId - 2]) {
-        matchColorLeft1 = squares[squareId - 2].style.backgroundImage ;
-    }
-    if (squares[squareId + 2]) {
-        matchColorRight1 = squares[squareId + 2].style.backgroundImage ;
-    }
-    if (squares[squareId - width]) {
-        matchColorUp = squares[squareId - width].style.backgroundImage;
-    }
-    if (squares[squareId + width]) {
-        matchColorDown = squares[squareId + width].style.backgroundImage ;
-    }
-    if (squares[squareId - (width * 2)]) {
-        matchColorUp1 = squares[squareId - (width * 2)].style.backgroundImage;
-    }
-    if (squares[squareId + (width * 2)]) {
-        matchColorDown1 = squares[squareId + (width * 2)].style.backgroundImage;
-    }
-
-  
         console.log(this.id, 'dragdrop')
         colorBeingReplaced = this.style.backgroundImage;
+        console.log("Color Being Replaced: " + colorBeingReplaced);
+
         squareIdBeingReplaced = parseInt(this.id);
+        console.log("\Square Id Being Replaced: " + squareIdBeingReplaced);
+        
         this.style.backgroundImage = colorBeingDragged
+        console.log("\this.style.backgroundImage: " + this.style.backgroundImage );
+
         squares[squareIdBeingDragged].style.backgroundImage = colorBeingReplaced;
+        console.log("\squares[squareIdBeingDragged].style.backgroundImage " + squares[squareIdBeingDragged].style.backgroundImage );
     }
 
     function dragEnd(){
@@ -147,33 +100,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
             squareIdBeingDragged +width
         ];
 
-
         let validMove =validMoves.includes(squareIdBeingReplaced)
+        console.log("squareIdBeingReplaced: " + squareIdBeingReplaced)
+        console.log("validMoves.includes(squareIdBeingReplaced): " + validMoves.includes(squareIdBeingReplaced));
+        console.log("\nvalidMove: " + validMove);
 
 
-
-        if(squareIdBeingReplaced && validMove) 
-           {
-            
-            if(matchColor === matchColorLeft && matchColor === matchColorRight)
+        if(squareIdBeingReplaced && validMove){
+            console.log("\nsquareIdBeingReplaced: " + squareIdBeingReplaced + " && validMove: " + validMove);
             squareIdBeingReplaced = null;
-            else if(matchColor === matchColorUp && matchColor === matchColorDown)
-            squareIdBeingReplaced = null;
-            else if(matchColor === matchColorLeft && matchColor === matchColorLeft1)
-            squareIdBeingReplaced = null;
-            else if(matchColor === matchColorRight && matchColor === matchColorRight1)
-            squareIdBeingReplaced = null;
-            else if(matchColor === matchColorUp && matchColor === matchColorUp1)
-            squareIdBeingReplaced = null;
-            else if(matchColor === matchColorDown && matchColor === matchColorDown1)
-            squareIdBeingReplaced = null;
-            else {
-                squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;
-                squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;
-            }
         }else if(squareIdBeingReplaced && !validMove){
+            console.log("\nsquareIdBeingReplaced: " + squareIdBeingReplaced + " && !validMove: " + validMove);
+
             squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;
+            console.log("\squares[squareIdBeingReplaced].style.backgroundImage " + squares[squareIdBeingReplaced].style.backgroundImage );
+
             squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;
+            console.log("\squares[squareIdBeingDragged].style.backgroundImage " + squares[squareIdBeingDragged].style.backgroundImage );
+
         }else squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;
 
 
@@ -199,12 +143,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
                 const isFirstRow = firstRow.includes(i);
 
-             /*   if(isFirstRow && squares[i].style.backgroundImage === ''){
+              /*  if(isFirstRow && squares[i].style.backgroundImage === ''){
 
                     let randomColor = Math.floor(Math.random() * candyColors.length)
                     squares[i].style.backgroundImage = candyColors[randomColor];
 
-                }*/
+                } */
 
             }
 

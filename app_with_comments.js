@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             else if(matchColor === matchColorDown && matchColor === matchColorDown1)
             squareIdBeingReplaced = null;
             else {squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;
-                squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;}
+                squares[squareIdBeingDragged].style.backgroundImage = colorBeingDragged;};
 //squareIdBeingReplaced = null;
         }else if(squareIdBeingReplaced && !validMove){
             squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;

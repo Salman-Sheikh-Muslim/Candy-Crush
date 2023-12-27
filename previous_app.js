@@ -100,16 +100,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
             squareIdBeingDragged +width
         ];
 
+    const isHorizontalMatch = checkForMatches(squareIdBeingReplaced, 'left') || checkForMatches(squareIdBeingReplaced, 'right');
+    const isVerticalMatch = checkForMatches(squareIdBeingReplaced, 'up') || checkForMatches(squareIdBeingReplaced, 'down');
+
+
         let validMove =validMoves.includes(squareIdBeingReplaced)
         console.log("squareIdBeingReplaced: " + squareIdBeingReplaced)
         console.log("validMoves.includes(squareIdBeingReplaced): " + validMoves.includes(squareIdBeingReplaced));
         console.log("\nvalidMove: " + validMove);
 
 
-        if(squareIdBeingReplaced && validMove){
+        if(squareIdBeingReplaced && validMove && (isHorizontalMatch || isVerticalMatch)){
             console.log("\nsquareIdBeingReplaced: " + squareIdBeingReplaced + " && validMove: " + validMove);
             squareIdBeingReplaced = null;
-        }else if(squareIdBeingReplaced && !validMove){
+        }else if(squareIdBeingReplaced && !validMove && !(isHorizontalMatch || isVerticalMatch)){
             console.log("\nsquareIdBeingReplaced: " + squareIdBeingReplaced + " && !validMove: " + validMove);
 
             squares[squareIdBeingReplaced].style.backgroundImage = colorBeingReplaced;
@@ -153,6 +157,29 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
 
         }
+    }
+
+
+    function checkForMatches(index, direction) {
+        const color = squares[index].style.backgroundImage;
+    
+        // Define the indexes to check based on the direction
+        const indexesToCheck = {
+            left: [index - 1, index - 2],
+            right: [index + 1, index + 2],
+            middlRow: [index + 1, index -1],
+
+            up: [index - width, index - (width * 2)],
+            down: [index + width, index + (width * 2)],
+            middleColumn: [index + width, index - width]
+        };
+    
+        const matchingIndexes = indexesToCheck[direction].filter(i => {
+            const isValidIndex = squares[i] && squares[i].style.backgroundImage === color;
+            return isValidIndex;
+        });
+    
+        return matchingIndexes.length >= 2;
     }
 
     //Checking the matches

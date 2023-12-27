@@ -90,18 +90,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function dragDrop(){
 
         squareId = parseInt(this.id);
-        //let squareIdMinus1 = squareId - 1;
-     /*  matchColorLeft = squares[squareId - 1].style.backgroundImage || 'Default Value'
-        matchColorRight = squares[squareId + 1].style.backgroundImage || 'Default Value'
-        matchColorLeft1 = squares[squareId - 2].style.backgroundImage || 'Default Value'
-        matchColorRight1 = squares[squareId + 2].style.backgroundImage || 'Default Value'
-
-        matchColorUp = squares[squareId - width].style.backgroundImage || 'Default Value'
-        matchColorDown = squares[squareId + width].style.backgroundImage || 'Default Value'
-        matchColorUp1 = squares[squareId - (width*2)].style.backgroundImage|| 'Default Value'
-        matchColorDown1 = squares[squareId + (width*2)].style.backgroundImage|| 'Default Value'
-        */
-
         
     // Initialize all variables with the default value
     matchColorLeft = 'Default Value';
@@ -138,49 +126,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if (squares[squareId + (width * 2)]) {
         matchColorDown1 = squares[squareId + (width * 2)].style.backgroundImage;
     }
-
-  /*      try {
-    
-            let firstValue, secondValue;
-    
-            // Group A
-             matchColorLeft = squares[squareId - 1].style.backgroundImage;
-             matchColorRight = squares[squareId + 1].style.backgroundImage;
-             matchColorLeft1 = squares[squareId - 2].style.backgroundImage;
-             matchColorRight1 = squares[squareId + 2].style.backgroundImage;
-    
-            const groupAValues = [matchColorLeft, matchColorRight, matchColorLeft1, matchColorRight1].filter(value => value !== '');
-    
-            if (groupAValues.length >= 2) {
-                [firstValue, secondValue] = groupAValues;
-            } else {
-                // Group B
-                 matchColorUp = squares[squareId - width].style.backgroundImage;
-                 matchColorDown = squares[squareId + width].style.backgroundImage;
-                 matchColorUp1 = squares[squareId - (width * 2)].style.backgroundImage;
-                 matchColorDown1 = squares[squareId + (width * 2)].style.backgroundImage;
-    
-                const groupBValues = [matchColorUp, matchColorDown, matchColorUp1, matchColorDown1].filter(value => value !== '');
-    
-                if (groupBValues.length >= 2) {
-                    [firstValue, secondValue] = groupBValues;
-                } else {
-                    // Handle the case where there are not enough values in either group
-                    throw new Error('Not enough values in Group A or Group B');
-                }
-            }
-    
-            console.log(this.id, 'dragdrop');
-            colorBeingReplaced = this.style.backgroundImage;
-            squareIdBeingReplaced = parseInt(this.id);
-            this.style.backgroundImage = colorBeingDragged;
-            squares[squareIdBeingDragged].style.backgroundImage = colorBeingReplaced;
-    
-            // Use firstValue and secondValue as needed
-            console.log(firstValue, secondValue);
-        } catch (error) {
-            console.error('Error in dragDrop:', error);
-        } */
 
         console.log(this.id, 'dragdrop')
         colorBeingReplaced = this.style.backgroundImage;
@@ -250,13 +195,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
                 const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
                 const isFirstRow = firstRow.includes(i);
-
-             /*   if(isFirstRow && squares[i].style.backgroundImage === ''){
-
-                    let randomColor = Math.floor(Math.random() * candyColors.length)
-                    squares[i].style.backgroundImage = candyColors[randomColor];
-
-                }*/
 
             }
 
